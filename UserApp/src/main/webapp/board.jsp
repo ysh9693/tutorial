@@ -11,6 +11,13 @@
 <title>게시판</title>
 </head>
 <body>
+    <%
+        //메인 페이지로 이동했을 때 세션에 값이 담겨있는지 체크
+        String userID = null;
+        if(session.getAttribute("userID") != null){
+            userID = (String)session.getAttribute("userID");
+        }
+    %>
 	<nav class="navbar navbar-default"> <!-- 네비게이션 -->
 		<div class="navbar-header"> 	<!-- 네비게이션 상단 부분 -->
 			<!-- 네비게이션 상단 박스 영역 -->
@@ -28,9 +35,13 @@
 		<!-- 게시판 제목 이름 옆에 나타나는 메뉴 영역 -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="main.jsp">메인</a></li>
-				<li><a href="bbs.jsp">게시판</a></li>
+				<li class="active"><a href="main.jsp">메인</a></li>
+				<li><a href="board.jsp">게시판</a></li>
 			</ul>
+                        <%
+                            //로그인 하지 않았을때 보여지는 화면
+                            if(userID == null){
+			%>
 			<!-- 헤더 우측에 나타나는 드랍다운 영역 -->
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
@@ -39,31 +50,31 @@
 						aria-expanded="false">접속하기<span class="caret"></span></a>
 					<!-- 드랍다운 아이템 영역 -->	
 					<ul class="dropdown-menu">
-						<li class="active"><a href="login.jsp">로그인</a></li>
+						<li><a href="login.jsp">로그인</a></li>
 						<li><a href="join.jsp">회원가입</a></li>
 					</ul>
 				</li>
 			</ul>
-		</div>
-	</nav>
-    <!-- 로그인 양식 -->
-	<div class="container">		<!-- 하나의 영역 생성 -->
-		<div class="col-lg-4">	<!-- 영역 크기 -->
-			<!-- 점보트론은 특정 컨텐츠, 정보를 두드러지게 하기 위한 큰 박스 -->
-			<div class="jumbotron" style="padding-top: 20px;">
-				<form method="post" action="loginAction.jsp">
-					<h3 style="text-align: center;">로그인 화면</h3>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호" name="userPassword" maxlength="20">
-					</div>
-					<input type="submit" class="btn btn-primary form-control" value="로그인">
-				</form>
-			</div>
-		</div>	
-	</div>
+			<%
+				// 로그인이 되어 있는 상태에서 보여주는 화면
+				}else{
+			%>
+			<!-- 헤더 우측에 나타나는 드랍다운 영역 -->
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">회원관리<span class="caret"></span></a>
+					<!-- 드랍다운 아이템 영역 -->	
+					<ul class="dropdown-menu">
+						<li><a href="logoutAction.jsp">로그아웃</a></li>
+					</ul>
+				</li>
+			</ul>
+			<%
+				}
+			%>
+    	</div>
 	<!-- 부트스트랩 참조 영역 -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>

@@ -17,11 +17,11 @@ public class UserDao {
     //메소드마다 반복되는 코드를 이곳에 넣으면 코드가 간소화된다
     public UserDao(){
         try{
+            Class.forName("oracle.jdbc.OracleDriver");
             String url="jdbc:oracle:thin:@dalma.dongguk.ac.kr:1521:stud1";
             String user ="ysh9693";
             String password = "1234";
             String sql2 = "select * from users where id=?";
-            Class.forName("oracle.jdbc.Driver");
             conn = DriverManager.getConnection(url,user,password);
         }catch (Exception e){
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class UserDao {
     }
     
 	public int login(String userID, String userPassword) {
-		String sql = "select userPassword from user where userID = ?";
+		String sql = "select userPassword from users where userID = ?";
 		try {
 			pstmt = conn.prepareStatement(sql); //sql쿼리문을 대기 시킨다
 			pstmt.setString(1, userID); //첫번째 '?'에 매개변수로 받아온 'userID'를 대입
@@ -46,5 +46,18 @@ public class UserDao {
 		}
 		return -2; //오류
 	}
-         
+        
+        public int join(UserBean user) {
+            String sql = "insert into users values(?, ?, ?)";
+            try {
+                   pstmt = conn.prepareStatement(sql);
+                   pstmt.setString(1, user.getUserID());
+                   pstmt.setString(2, user.getUserPassword());
+                   pstmt.setString(3, user.getUserName());
+                   return pstmt.executeUpdate();
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            return -1;
+        }
 }
