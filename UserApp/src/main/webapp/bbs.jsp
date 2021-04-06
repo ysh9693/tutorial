@@ -35,8 +35,8 @@
 		<!-- 게시판 제목 이름 옆에 나타나는 메뉴 영역 -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="main.jsp">메인</a></li>
-				<li><a href="bbs.jsp">게시판</a></li>
+				<li><a href="main.jsp">메인</a></li>
+				<li class="active"><a href="bbs.jsp">게시판</a></li>
 			</ul>
                         <%
                             //로그인 하지 않았을때 보여지는 화면
@@ -78,11 +78,29 @@
     </nav>
     <!-- 네비게이션 영역 끝 -->
     <!-- 게시판 메인 페이지 영역 시작 -->
-<div class="container">
-		<div class="jumbotron">
-			<div class="container">
-				<p>관광객 현황을 게시판 형식으로 먼저 출력을 한뒤에 년도 선택등의 기능을 넣을 예정입니다</p>
-			</div>
+	<div class="container">
+		<div class="row">
+			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+				<thead>
+					<tr>
+						<th style="background-color: #eeeeee; text-align: center;">번호</th>
+						<th style="background-color: #eeeeee; text-align: center;">제목</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
+						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<!-- 테스트 코드 -->
+						<td>1</td>
+						<td>관광객</td>
+						<td>홍길동</td>
+						<td>2021-03-30</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 글쓰기 버튼 생성 -->
+			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 		</div>
 	</div>
 	<!-- 게시판 메인 페이지 영역 끝 -->
