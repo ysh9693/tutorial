@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="com.dgu.userapp.TourDao" %>
+<%@ page import="com.dgu.userapp.TourBean" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,8 +39,8 @@
 		<!-- 게시판 제목 이름 옆에 나타나는 메뉴 영역 -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="main.jsp">메인</a></li>
-				<li><a href="bbs.jsp">게시판</a></li>
+				<li><a href="main.jsp">메인</a></li>
+				<li class="active"><a href="bbs.jsp">게시판</a></li>
 			</ul>
                         <%
                             //로그인 하지 않았을때 보여지는 화면
@@ -78,11 +82,53 @@
     </nav>
     <!-- 네비게이션 영역 끝 -->
     <!-- 게시판 메인 페이지 영역 시작 -->
-<div class="container">
-		<div class="jumbotron">
-			<div class="container">
-				<p>관광객 현황을 게시판 형식으로 먼저 출력을 한뒤에 년도 선택등의 기능을 넣을 예정입니다</p>
-			</div>
+	<div class="container">
+		<div class="row">
+			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+				<thead>
+					<tr>
+						<th style="background-color: #eeeeee; text-align: center;">도시</th>
+						<th style="background-color: #eeeeee; text-align: center;">년도</th>
+						<th style="background-color: #eeeeee; text-align: center;">지점</th>
+                                                <th style="background-color: #eeeeee; text-align: center;">합계</th>
+						<th style="background-color: #eeeeee; text-align: center;">외국인</th>
+                                                <th style="background-color: #eeeeee; text-align: center;">내국인</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						TourDao tourDao = new TourDao(); // 인스턴스 생성
+						ArrayList<TourBean> list = tourDao.getList(pageNumber);
+						for(int i = 0; i < list.size(); i++){
+					%>
+					<tr>
+						<td><%= list.get(i).getCity() %></td>
+						<td><%= list.get(i).getYear() %></td>
+						<td><%= list.get(i).getBranch() %></td>
+						<td><%= list.get(i).getSum() %></td>
+                                                <td><%= list.get(i).getCitizen() %></td>
+                                                <td><%= list.get(i).getForeigner() %></td>
+					</tr>
+					<%
+						}
+					%>
+				</tbody>
+			</table>
+			
+			<!-- 페이징 처리 영역 -->
+			<%
+				if(pageNumber != 1){
+			%>
+				<a href="main.jsp?pageNumber=<%=pageNumber - 1 %>"
+					class="btn btn-success btn-arraw-left">이전</a>
+			<%
+				}if(tourDao.nextPage(pageNumber + 1)){
+			%>
+				<a href="main.jsp?pageNumber=<%=pageNumber + 1 %>"
+					class="btn btn-success btn-arraw-left">다음</a>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<!-- 게시판 메인 페이지 영역 끝 -->
@@ -90,3 +136,4 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
+</html>
