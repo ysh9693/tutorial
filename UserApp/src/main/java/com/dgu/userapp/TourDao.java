@@ -26,7 +26,7 @@ public class TourDao {
     //게시글 번호 부여 메소드
     public int getNext() {
 	//현재 게시글을 내림차순으로 조회하여 가장 마지막 글의 번호를 구한다
-	String sql = "select city from tour order by bbsID desc";
+	String sql = "select city from tour order by city desc";
 	try {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
@@ -41,10 +41,11 @@ public class TourDao {
     }
     
     public ArrayList<TourBean> getList(int pageNumber){
-	String sql = "select * from tourist";
+	String sql = "select * from tourist where rownum <=10";
     	ArrayList<TourBean> list = new ArrayList<TourBean>();
 	try {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
 		rs = pstmt.executeQuery();
 		while(rs.next()) {
 			TourBean tb = new TourBean();
@@ -63,7 +64,7 @@ public class TourDao {
     }
     //페이징 처리 메소드
     public boolean nextPage(int pageNumber) {
-	String sql = "select * from bbs where bbsID < ? and bbsAvailable = 1";
+	String sql = "select * from tour";
 	try {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);

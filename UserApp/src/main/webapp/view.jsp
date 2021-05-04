@@ -38,7 +38,7 @@
 		}
 		
 		// 유효한 글이라면 구체적인 정보를 'bbs'라는 인스턴스에 담는다
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
+		BbsBean bbs = new BbsDao().getBbs(bbsID);
 	%>
 	<nav class="navbar navbar-default"> <!-- 네비게이션 -->
 		<div class="navbar-header"> 	<!-- 네비게이션 상단 부분 -->
@@ -121,8 +121,7 @@
 					</tr>
 					<tr>
 						<td>작성일자</td>
-						<td colspan="2"><%= bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + "시"
-								+ bbs.getBbsDate().substring(14, 16) + "분" %></td>
+						<td colspan="2"><%= bbs.getBbsDate()%></td>
 					</tr>
 					<tr>
 						<td>내용</td>
@@ -138,7 +137,8 @@
 				if(userID != null && userID.equals(bbs.getUserID())){
 			%>
 					<a href="update.jsp?bbsID=<%= bbsID %>" class="btn btn-primary">수정</a>
-					<a href="deleteAction.jsp?bbsID=<%= bbsID %>" class="btn btn-primary">삭제</a>
+                                        <a onclick="return confirm('정말로 삭제하겠습니까?')"
+					href="deleteAction.jsp?bbsID=<%= bbsID %>" class="btn btn-primary">삭제</a>
 			<%
 				}
 			%>
