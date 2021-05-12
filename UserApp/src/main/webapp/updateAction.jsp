@@ -1,16 +1,14 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.dgu.userapp.BbsDao"%>
+<%@page import="com.dgu.userapp.BbsBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("utf-8"); %>
-<jsp:useBean id="bbs" class="com.dgu.userapp.BbsBean" scope="page" />
-<jsp:setProperty name="bbs" property="bbsTitle" />
-<jsp:setProperty name="bbs" property="bbsContent" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JSP 게시판 웹 사이트</title>
+<title>관광객 현황 통계 시스템</title>
 </head>
 <body>
 	<%
@@ -40,7 +38,7 @@
 			script.println("</script>");
 		}
 		//해당 'bbsID'에 대한 게시글을 가져온 다음 세션을 통하여 작성자 본인이 맞는지 체크한다
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
+		BbsBean bbs = new BbsDao().getBbs(bbsID);
 		if(!userID.equals(bbs.getUserID())){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
@@ -58,7 +56,7 @@
 				script.println("</script>");
 			}else{
 				// 정상적으로 입력이 되었다면 글 수정 로직을 수행한다
-				BbsDAO bbsDAO = new BbsDAO();
+				BbsDao bbsDAO = new BbsDao();
 				int result = bbsDAO.update(bbsID, request.getParameter("bbsTitle"), request.getParameter("bbsContent"));
 				// 데이터베이스 오류인 경우
 				if(result == -1){

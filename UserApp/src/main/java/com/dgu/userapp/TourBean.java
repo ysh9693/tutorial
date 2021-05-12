@@ -7,6 +7,7 @@ public class TourBean {
     private int sum;
     private int citizen;
     private int foreigner;
+    
 
     public String getCity() {
         return city;

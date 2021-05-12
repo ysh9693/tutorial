@@ -11,7 +11,7 @@
 <meta name="viewport" content="width-device-width", initial-scale="1">
 <!-- 루트 폴더에 부트스트랩을 참조하는 링크 -->
 <link rel="stylesheet" href="css/bootstrap.css">
-<title>JSP 게시판 웹 사이트</title>
+<title>관광객 현황 통계 시스템</title>
 </head>
 <body>
 	<%
@@ -39,7 +39,7 @@
 			script.println("</script>");
 		}
 		//해당 'bbsID'에 대한 게시글을 가져온 다음 세션을 통하여 작성자 본인이 맞는지 체크한다
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
+		BbsBean bbs = new BbsDao().getBbs(bbsID);
 		if(!userID.equals(bbs.getUserID())){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");

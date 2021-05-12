@@ -21,10 +21,16 @@ public class UserDao {
             String url="jdbc:oracle:thin:@dalma.dongguk.ac.kr:1521:stud1";
             String user ="ysh9693";
             String password = "1234";
-            String sql2 = "select * from users where id=?";
             conn = DriverManager.getConnection(url,user,password);
-        }catch (Exception e){
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("오류 Message : " + e.getMessage());
+            e.printStackTrace(System.out);
+        } catch (SQLException e) {
+            System.out.println("오류 SQLException : " + e.getSQLState());
+            System.out.println("오류 Message : " + e.getErrorCode() + " - " + e.getMessage());
+            e.printStackTrace(System.out);
+        } finally {
+            DBC.close(conn);
         }
     }
     
@@ -55,9 +61,13 @@ public class UserDao {
                    pstmt.setString(2, user.getUserPassword());
                    pstmt.setString(3, user.getUserName());
                    return pstmt.executeUpdate();
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+            } catch (SQLException e) {
+            System.out.println("오류 SQLException : " + e.getSQLState());
+            System.out.println("오류 Message : " + e.getErrorCode() + " - " + e.getMessage());
+            e.printStackTrace(System.out);
+        } finally {
+            DBC.close(conn, pstmt, rs);
+        }
             return -1;
         }
 }
